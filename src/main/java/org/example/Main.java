@@ -50,12 +50,13 @@ public class Main {
             else if (cmd.equals("article write")){
                 int id = lastArticleId + 1;
                 lastArticleId = id;
+                String regDate = util.getNowDateStr();
                 System.out.print("제목 : ");
                 String title = sc.nextLine();
                 System.out.print("내용 : ");
                 String body = sc.nextLine();
 
-                Article article = new Article(id, title, body);
+                Article article = new Article(id, regDate,title, body);
                 articles.add(article);
                 System.out.printf("%d번 글이 생성되었습니다.\n", id);
             }
@@ -93,7 +94,7 @@ public class Main {
                     System.out.printf("%s번 게시물은 존재하지 않습니다.\n", id);
                     continue;
                 }
-                System.out.printf("번호: %s\n날짜 : %s\n제목 : %s\n내용 : %s\n", foundArticle.id,"2024-03-20 12:12:12", foundArticle.title, foundArticle.body);
+                System.out.printf("번호: %s\n날짜 : %s\n제목 : %s\n내용 : %s\n", foundArticle.id,foundArticle.regDate, foundArticle.title, foundArticle.body);
             }
 
             else if (cmd.startsWith("article delete ")){
@@ -114,7 +115,6 @@ public class Main {
                     continue;
                 }
                 articles.remove(foundIndex);
-
                 System.out.printf("%s번 게시물이 삭제되었습니다.\n", id);
             }
             else {
@@ -137,11 +137,13 @@ public class Main {
 
 class Article {
     int id;
+    String regDate;
     String title;
     String body;
 
-    public Article(int id, String title, String body) {
+    public Article(int id, String regDate,String title, String body) {
         this.id = id;
+        this.regDate = regDate;
         this.title = title;
         this.body = body;
     }
