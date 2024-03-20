@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import static java.lang.Integer.valueOf;
-
 public class Main {
     public static void main(String[] args) {
         System.out.println("== 프로그램 시작 ==");
@@ -98,6 +96,27 @@ public class Main {
                 System.out.printf("번호: %s\n날짜 : %s\n제목 : %s\n내용 : %s\n", foundArticle.id,"2024-03-20 12:12:12", foundArticle.title, foundArticle.body);
             }
 
+            else if (cmd.startsWith("article delete ")){
+                String cmdBits = cmd.split(" ")[2];
+                int id = Integer.parseInt(cmdBits);
+                int foundIndex = -1;
+
+                for (int i =0; i < articles.size(); i++){
+                    Article article = articles.get(i);
+                    if(article.id == id) {
+                        foundIndex = i;
+                        break;
+                    }
+                }
+
+                if (foundIndex == -1){
+                    System.out.printf("%s번 게시물은 존재하지 않습니다.\n", id);
+                    continue;
+                }
+                articles.remove(foundIndex);
+
+                System.out.printf("%s번 게시물이 삭제되었습니다.\n", id);
+            }
             else {
                 System.out.printf("%s(은)는 존재하지 않는 명령어 입니다.\n", cmd);
             }
