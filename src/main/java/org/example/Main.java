@@ -67,11 +67,11 @@ public class Main {
                     continue;
                 }
                 else {
-                    System.out.println("번호 | 제목");
+                    System.out.println("번호 | 조희 |제목");
                     for (int i = 0; i<articles.size(); i++) {
                         Article article = articles.get(i);
 
-                        System.out.printf("%d    | %s\n", article.id, article.title);
+                        System.out.printf("%4d | %4d | %s\n", article.id, article.hit, article.title);
                     }
                 }
             }
@@ -94,8 +94,15 @@ public class Main {
                     System.out.printf("%s번 게시물은 존재하지 않습니다.\n", id);
                     continue;
                 }
-                System.out.printf("번호: %s\n날짜 : %s\n제목 : %s\n내용 : %s\n", foundArticle.id,foundArticle.regDate, foundArticle.title, foundArticle.body);
+                foundArticle.increaseHit();
+                System.out.printf("번호: %s\n", foundArticle.id);
+                System.out.printf("날짜 : %s\n", foundArticle.regDate);
+                System.out.printf("제목 : %s\n", foundArticle.title);
+                System.out.printf("내용 : %s\n", foundArticle.body);
+                System.out.printf("조회 : %s\n", foundArticle.hit);
+
             }
+            // 게시물 수정
             else if (cmd.startsWith("article modify ")) {
                 String cmdBits = cmd.split(" ")[2];
                 int id = Integer.parseInt(cmdBits);
@@ -142,12 +149,6 @@ public class Main {
                 }
                 articles.remove(foundIndex);
                 System.out.printf("%s번 게시물이 삭제되었습니다.\n", id);
-
-                for (int i = foundIndex; i<articles.size(); i++){
-                    Article article = articles.get(id);
-                    article.set(i,i+1);
-                }
-                lastArticleId--;
             }
             else {
                 System.out.printf("%s(은)는 존재하지 않는 명령어 입니다.\n", cmd);
@@ -172,11 +173,16 @@ class Article {
     String regDate;
     String title;
     String body;
+    int hit;
 
     public Article(int id, String regDate,String title, String body) {
         this.id = id;
         this.regDate = regDate;
         this.title = title;
         this.body = body;
+        this.hit = 0;
+    }
+    public void increaseHit(){
+        hit++;
     }
 }
