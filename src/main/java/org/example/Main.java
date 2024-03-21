@@ -96,7 +96,33 @@ public class Main {
                 }
                 System.out.printf("번호: %s\n날짜 : %s\n제목 : %s\n내용 : %s\n", foundArticle.id,foundArticle.regDate, foundArticle.title, foundArticle.body);
             }
+            else if (cmd.startsWith("article modify ")) {
+                String cmdBits = cmd.split(" ")[2];
+                int id = Integer.parseInt(cmdBits);
+                Article foundArticle = null;
 
+                for( int i = 0; i <articles.size();i++){
+                    Article article = articles.get(i);
+
+                    if (article.id == id){
+                        foundArticle = article;
+                        break;
+                    }
+                }
+
+                if (foundArticle == null) {
+                    System.out.printf("%s번 게시물은 존재하지 않습니다.\n", id);
+                    continue;
+                }
+                System.out.printf("제목 : ");
+                String title = sc.nextLine();
+                System.out.printf("내용 : ");
+                String body = sc.nextLine();
+
+                foundArticle.title = title;
+                foundArticle.body = body;
+                System.out.printf("%s 게시물이 수정 되었습니다.\n",id);
+            }
             else if (cmd.startsWith("article delete ")){
                 String cmdBits = cmd.split(" ")[2];
                 int id = Integer.parseInt(cmdBits);
@@ -116,6 +142,12 @@ public class Main {
                 }
                 articles.remove(foundIndex);
                 System.out.printf("%s번 게시물이 삭제되었습니다.\n", id);
+
+                for (int i = foundIndex; i<articles.size(); i++){
+                    Article article = articles.get(id);
+                    article.set(i,i+1);
+                }
+                lastArticleId--;
             }
             else {
                 System.out.printf("%s(은)는 존재하지 않는 명령어 입니다.\n", cmd);
