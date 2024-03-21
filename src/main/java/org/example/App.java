@@ -78,16 +78,8 @@ public class App {
 
                 String cmdBits = cmd.split(" ")[2];
                 int id = Integer.parseInt(cmdBits);
-                Article foundArticle = null;
 
-                for( int i = 0; i <articles.size();i++){
-                    Article article = articles.get(i);
-
-                    if (article.id == id){
-                        foundArticle = article;
-                        break;
-                    }
-                }
+                Article foundArticle = getAritcleById(id);
 
                 if (foundArticle == null) {
                     System.out.printf("%s번 게시물은 존재하지 않습니다.\n", id);
@@ -105,16 +97,8 @@ public class App {
             else if (cmd.startsWith("article modify ")) {
                 String cmdBits = cmd.split(" ")[2];
                 int id = Integer.parseInt(cmdBits);
-                Article foundArticle = null;
 
-                for( int i = 0; i <articles.size();i++){
-                    Article article = articles.get(i);
-
-                    if (article.id == id){
-                        foundArticle = article;
-                        break;
-                    }
-                }
+                Article foundArticle = getAritcleById(id);
 
                 if (foundArticle == null) {
                     System.out.printf("%s번 게시물은 존재하지 않습니다.\n", id);
@@ -133,15 +117,8 @@ public class App {
             else if (cmd.startsWith("article delete ")){
                 String cmdBits = cmd.split(" ")[2];
                 int id = Integer.parseInt(cmdBits);
-                int foundIndex = -1;
 
-                for (int i =0; i < articles.size(); i++){
-                    Article article = articles.get(i);
-                    if(article.id == id) {
-                        foundIndex = i;
-                        break;
-                    }
-                }
+                int foundIndex = getAritcleIndexById(id);
 
                 if (foundIndex == -1){
                     System.out.printf("%s번 게시물은 존재하지 않습니다.\n", id);
@@ -150,12 +127,33 @@ public class App {
                 articles.remove(foundIndex);
                 System.out.printf("%s번 게시물이 삭제되었습니다.\n", id);
             }
+
             else {
                 System.out.printf("%s(은)는 존재하지 않는 명령어 입니다.\n", cmd);
             }
         }
         sc.close();
         System.out.println("== 프로그램 끝 ==");
+    }
+
+    private int getAritcleIndexById(int id) {
+        int i = 0;
+        for ( Article article : articles){
+            if (article.id == id){
+                return i;
+            }
+            i++;
+        }
+        return -1;
+    }
+
+    private Article getAritcleById(int id){
+        int index = getAritcleIndexById(id);
+
+        if (index != -1){
+            return articles.get(index);
+        }
+        return null;
     }
     private void makeTestData(){
         System.out.println("테스트를 위한 게시물 데이터를 생성합니다.");
