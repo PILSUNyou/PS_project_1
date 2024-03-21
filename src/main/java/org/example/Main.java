@@ -5,21 +5,18 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
+    private static List<Article> articles;
+    static {
+        articles = new ArrayList<>();
+    }
     public static void main(String[] args) {
         System.out.println("== 프로그램 시작 ==");
+
+        makeTestData();
         Scanner sc = new Scanner(System.in);
-
         List<Integer> number = new ArrayList<>();
-        List<Article> articles = new ArrayList<>();
-
-        int lastArticleId = 0;
-//        int count = 0;
 
         while (true) {
-//            if(count == 0) {
-//                PrintSet();
-//                count++;
-//            }
             System.out.print("명령어 입력 : ");
             String cmd = sc.nextLine();
             cmd = cmd.trim();
@@ -48,8 +45,7 @@ public class Main {
             }
 
             else if (cmd.equals("article write")){
-                int id = lastArticleId + 1;
-                lastArticleId = id;
+                int id = articles.size() + 1;
                 String regDate = util.getNowDateStr();
                 System.out.print("제목 : ");
                 String title = sc.nextLine();
@@ -67,7 +63,7 @@ public class Main {
                     continue;
                 }
                 else {
-                    System.out.println("번호 | 조희 |제목");
+                    System.out.println("번호 | 조희 | 제목");
                     for (int i = 0; i<articles.size(); i++) {
                         Article article = articles.get(i);
 
@@ -95,7 +91,7 @@ public class Main {
                     continue;
                 }
                 foundArticle.increaseHit();
-                System.out.printf("번호: %s\n", foundArticle.id);
+                System.out.printf("번호 : %s\n", foundArticle.id);
                 System.out.printf("날짜 : %s\n", foundArticle.regDate);
                 System.out.printf("제목 : %s\n", foundArticle.title);
                 System.out.printf("내용 : %s\n", foundArticle.body);
@@ -157,15 +153,13 @@ public class Main {
         sc.close();
         System.out.println("== 프로그램 끝 ==");
     }
-//    public static void PrintSet(){
-//        System.out.println("=== 입력 가능한 명령어 ===");
-//        System.out.println("num -> 숫자 입력");
-//        System.out.println("nums -> 숫자 확인");
-//        System.out.println("article write -> 게시글 쓰기");
-//        System.out.println("article list -> 게시물 보기");
-//        System.out.println("exit -> 나가기");
-//        System.out.println("=== 입력 가능한 명령어 ===");
-//    }
+    static void makeTestData(){
+        System.out.println("테스트를 위한 게시물 데이터를 생성합니다.");
+        articles.add(new Article(1, util.getNowDateStr(), "제목 1", "내용 1",12));
+        articles.add(new Article(2, util.getNowDateStr(), "제목 2", "내용 2",101));
+        articles.add(new Article(3, util.getNowDateStr(), "제목 3", "내용 3",3));
+
+    }
 }
 
 class Article {
@@ -175,12 +169,15 @@ class Article {
     String body;
     int hit;
 
-    public Article(int id, String regDate,String title, String body) {
+    public Article(int id, String regDate,String title, String body, int hit) {
         this.id = id;
         this.regDate = regDate;
         this.title = title;
         this.body = body;
-        this.hit = 0;
+        this.hit = hit;
+    }
+    public Article(int id, String regDate,String title, String body) {
+        this(id, regDate, title, body, 0);
     }
     public void increaseHit(){
         hit++;
