@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.controller.ArticleController;
+import org.example.controller.MemberController;
 import org.example.dto.Article;
 import org.example.dto.Member;
 import org.example.util.Util;
@@ -7,22 +9,23 @@ import org.example.util.Util;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.logging.Logger;
 
 public class App {
     private List<Article> articles;
-    private List<Member> members;
+
     App(){
         articles = new ArrayList<>();
-        members = new ArrayList<>();
     }
 
     public void start() {
         System.out.println("== 프로그램 시작 ==");
         // 테스트 데이터 실행
         makeTestData();
-        Scanner sc = new Scanner(System.in);
         List<Integer> number = new ArrayList<>();
+
+        Scanner sc = new Scanner(System.in);
+        MemberController memberController = new MemberController(sc);
+        ArticleController articleController = new ArticleController();
         // 게시물 프로그램 실행
         while (true) {
             System.out.print("명령어 입력 : ");
@@ -52,42 +55,7 @@ public class App {
             }
             // 회원가입
             else if (cmd.equals("member join")){
-                int id = members.size() +1;
-                String regDate = Util.getNowDateStr();
-                String loginId = null;
-                while (true){
-                    System.out.printf("사용할 ID를 입력하세요 : ");
-                    loginId = sc.nextLine();
-
-                    if (isJoinableLoginId(loginId) == false){
-                        System.out.printf("%s(은)는 이미 사용중인 아이디 입니다.\n", loginId);
-                        continue;
-                    }
-                    break;
-                }
-
-                String loginPw= null;
-                String loginPwConfirm = null;
-
-                while (true){
-                    System.out.print("패스워드를 입력하세요 : ");
-                    loginPw = sc.nextLine();
-                    System.out.print("패스워드 확인 : ");
-                    loginPwConfirm = sc.nextLine();
-
-                    if (loginPw.equals(loginPwConfirm) == false) {
-                        System.out.println("패스워드가 일치하지 않습니다. 다시 작성해 주세요.");
-                        continue;
-                    }
-                    break;
-                }
-
-                System.out.printf("이름을 입력하세요 : ");
-                String name = sc.nextLine();
-
-                Member member = new Member(id, regDate,loginId, loginPw, name);
-                members.add(member);
-                System.out.printf("%s님 %d번 회원이 생성 되었습니다.\n",member.name, id);
+                memberController.doJoin();
             }
             // 새로운 게시물 작성하기
             else if (cmd.equals("article write")){
@@ -194,25 +162,6 @@ public class App {
         }
         sc.close();
         System.out.println("== 프로그램 끝 ==");
-    }
-
-    private boolean isJoinableLoginId(String loginId) {
-        int index = getMemberIndexByLoginId(loginId);
-
-        if(index == -1){
-            return true;
-        }
-        return false;
-    }
-    private int getMemberIndexByLoginId(String loginId) {
-        int i = 0;
-        for ( Member member : members){
-            if (member.loginId.equals(loginId)){
-                return i;
-            }
-            i++;
-        }
-        return -1;
     }
 
     private int getAritcleIndexById(int id) {
