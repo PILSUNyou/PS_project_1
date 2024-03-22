@@ -30,6 +30,9 @@ public class MemberController extends Controller {
             case "login":
                 doLogin();
                 break;
+            case "logout":
+                doLogout();
+                break;
             default:
                 System.out.printf("존재하지 않는 명령어 입니다.");
                 break;
@@ -81,6 +84,11 @@ public class MemberController extends Controller {
         System.out.printf("%s님 %d번 회원이 생성 되었습니다.\n",member.name, id);
     }
     public void doLogin(){
+        if (isLogined()){
+            System.out.println("이미 로그인 되어 있습니다.");
+            return;
+        }
+
         System.out.printf("ID : ");
         String loginId = sc.nextLine();
         System.out.printf("PassWord : ");
@@ -101,6 +109,18 @@ public class MemberController extends Controller {
         System.out.printf("로그인 성공! %s님 환영합니다.\n",loginedMember.name);
     }
 
+    private boolean isLogined(){
+        return loginedMember != null;
+    }
+
+    private void doLogout() {
+        if(isLogined() == false) {
+            System.out.println("로그인 상태가 아닙니다.");
+        }
+
+        loginedMember = null;
+        System.out.printf("로그아웃 되었습니다.\n");
+    }
     private boolean isJoinableLoginId(String loginId) {
         int index = getMemberIndexByLoginId(loginId);
 
