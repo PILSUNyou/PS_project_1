@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import jdk.dynalink.support.AbstractRelinkableCallSite;
 import org.example.dto.Member;
 import org.example.util.Util;
 
@@ -7,12 +8,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class MemberController {
+public class MemberController extends Controller{
     private  Scanner sc;
     private List<Member> members;
+    private  String cmd;
+    private  String actionMethodName;
     public MemberController(Scanner sc){
         this.sc = sc;
         members = new ArrayList<>();
+    }
+
+    public void doAction(String cmd,String actionMethodName){
+        this.cmd = cmd;
+        this.actionMethodName = actionMethodName;
+
+        switch ( actionMethodName ){
+            case "join":
+                doJoin();
+                break;
+        }
     }
     public void doJoin() {
         int id = members.size() +1;

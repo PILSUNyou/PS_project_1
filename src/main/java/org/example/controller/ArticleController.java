@@ -7,12 +7,38 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class ArticleController {
+public class ArticleController extends Controller {
     private  Scanner sc;
     private  List<Article> articles;
+    private  String cmd;
+    private  String actionMethodName;
     public ArticleController(Scanner sc){
         this.sc = sc;
         articles = new ArrayList<>();
+    }
+
+    public void doAction(String cmd, String actionMethodName){
+        this.cmd = cmd;
+        this.actionMethodName = actionMethodName;
+
+        switch ( actionMethodName ){
+            case "write":
+                doWrite();
+                break;
+            case "list":
+                showList(cmd);
+                break;
+            case "detail":
+                showDetail(cmd);
+                break;
+            case "modify":
+                doModify(cmd);
+                break;
+            case "delete":
+                doDelete(cmd);
+                break;
+        }
+
     }
     public void makeTestData(){
         System.out.println("테스트를 위한 게시물 데이터를 생성합니다.");
