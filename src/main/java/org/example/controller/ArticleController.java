@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ArticleController extends Controller {
-    private  Scanner sc;
-    private  List<Article> articles;
-    private  String cmd;
-    private  String actionMethodName;
+    private Scanner sc;
+    private List<Article> articles;
+    private String cmd;
+    private String actionMethodName;
     public ArticleController(Scanner sc){
         this.sc = sc;
         articles = new ArrayList<>();
@@ -26,16 +26,19 @@ public class ArticleController extends Controller {
                 doWrite();
                 break;
             case "list":
-                showList(cmd);
+                showList();
                 break;
             case "detail":
-                showDetail(cmd);
+                showDetail();
                 break;
             case "modify":
-                doModify(cmd);
+                doModify();
                 break;
             case "delete":
-                doDelete(cmd);
+                doDelete();
+                break;
+            default :
+                System.out.printf("존재하지 않는 명령어 입니다.");
                 break;
         }
 
@@ -59,7 +62,7 @@ public class ArticleController extends Controller {
         System.out.printf("%d번 글이 생성되었습니다.\n", id);
     }
 
-    public  void showList(String cmd) {
+    public void showList() {
         if(articles.size() == 0) {
             System.out.println("게시물이 없습니다.");
             return;
@@ -90,7 +93,7 @@ public class ArticleController extends Controller {
         }
     }
 
-    public  void showDetail(String cmd) {
+    public  void showDetail() {
         String cmdBits = cmd.split(" ")[2];
         int id = Integer.parseInt(cmdBits);
 
@@ -109,7 +112,7 @@ public class ArticleController extends Controller {
 
     }
 
-    public  void doModify(String cmd) {
+    public  void doModify() {
         String cmdBits = cmd.split(" ")[2];
         int id = Integer.parseInt(cmdBits);
 
@@ -129,7 +132,7 @@ public class ArticleController extends Controller {
         System.out.printf("%s 게시물이 수정 되었습니다.\n",id);
     }
 
-    public  void doDelete(String cmd) {
+    public  void doDelete(  ) {
         String cmdBits = cmd.split(" ")[2];
         int id = Integer.parseInt(cmdBits);
 
