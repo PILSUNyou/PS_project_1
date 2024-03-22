@@ -14,8 +14,9 @@ public class App {
         Scanner sc = new Scanner(System.in);
         MemberController memberController = new MemberController(sc);
         ArticleController articleController = new ArticleController(sc);
-        // 테스트 데이터 실행
+        // 테스트 데이터 실행 및 회원 생성
         articleController.makeTestData();
+        memberController.makeTestData();
 
         // 게시물 프로그램 실행
         while (true) {
