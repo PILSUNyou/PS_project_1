@@ -33,9 +33,9 @@ public class App {
                 break;
             }
             String[] cmdBits = cmd.split(" ");
-            String controllerName = cmdBits[0];
-            String actionMethodName = cmdBits[1];
-            Controller controller = null;
+                String controllerName = cmdBits[0];
+                String actionMethodName = cmdBits[1];
+                Controller controller = null;
 
             if (controllerName.equals("article")){
                 controller = articleController;
