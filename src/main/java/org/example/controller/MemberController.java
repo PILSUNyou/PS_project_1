@@ -1,8 +1,10 @@
 package org.example.controller;
 
+import com.sun.source.tree.ContinueTree;
 import org.example.Container;
 import org.example.dto.Article;
 import org.example.dto.Member;
+import org.example.service.MemberService;
 import org.example.util.Util;
 
 import java.util.ArrayList;
@@ -11,13 +13,14 @@ import java.util.Scanner;
 
 public class MemberController extends Controller {
     private Scanner sc;
-    private List<Member> members;
     private String cmd;
     private String actionMethodName;
 
+    private MemberService memberService;
+
     public MemberController(Scanner sc) {
         this.sc = sc;
-        members = Container.memberDao.members;
+        memberService = Container.memberService;
     }
 
     public void doAction(String cmd, String actionMethodName) {
@@ -47,9 +50,10 @@ public class MemberController extends Controller {
         Container.memberDao.add(new Member(Container.memberDao.getNewId(),Util.getNowDateStr(), "user2","user2","홍길순"));
     }
     public void doJoin() {
-        int id = members.size() +1;
+        int id = memberService.getNewId();
         String regDate = Util.getNowDateStr();
         String loginId = null;
+
         while (true){
             System.out.printf("사용할 ID를 입력하세요 : ");
             loginId = sc.nextLine();
@@ -82,7 +86,8 @@ public class MemberController extends Controller {
         String name = sc.nextLine();
 
         Member member = new Member(id, regDate,loginId, loginPw, name);
-        Container.memberDao.add(member);
+        memberService.add(member);
+
         System.out.printf("%s님 %d번 회원이 생성 되었습니다.\n",member.name, id);
     }
     public void doLogin(){
@@ -92,7 +97,7 @@ public class MemberController extends Controller {
         String loginPw = sc.nextLine();
 
         // 입력받은 아이디에 해당하는 회원이 존재하는지 확인
-        Member member = getMemberByLoginId(loginId);
+        Member member = memberService.getMemberByLoginId(loginId);
 
         if (member == null){
             System.out.println("해당 회원은 존재하지 않습니다.");
@@ -111,30 +116,12 @@ public class MemberController extends Controller {
         System.out.printf("로그아웃 되었습니다.\n");
     }
     private boolean isJoinableLoginId(String loginId) {
-        int index = getMemberIndexByLoginId(loginId);
+        int index = memberService.getMemberIndexByLoginId(loginId);
 
         if(index == -1){
             return true;
         }
         return false;
     }
-    private int getMemberIndexByLoginId(String loginId) {
-        int i = 0;
-        for ( Member member : members){
-            if (member.loginId.equals(loginId)){
-                return i;
-            }
-            i++;
-        }
-        return -1;
-    }
-    private Member getMemberByLoginId(String loginId) {
-        int index = getMemberIndexByLoginId(loginId);
 
-        if (index == -1){
-            return null;
-        }
-
-        return members.get(index);
-    }
 }

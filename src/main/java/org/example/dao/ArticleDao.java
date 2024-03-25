@@ -18,12 +18,12 @@ public class ArticleDao extends Dao{
         lastId++;
     }
 
-    public List<Article> gerArticles() {
+    public List<Article> getArticles() {
         return articles;
     }
 
     public List<Article> getForPrintArticles(String searchKeyword) {
-        Container.articleDao.gerArticles();
+        Container.articleDao.getArticles();
 
         if (searchKeyword != null && searchKeyword.length() != 0) {
             List<Article> forListArticles = new ArrayList<>();
