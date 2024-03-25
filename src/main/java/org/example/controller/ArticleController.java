@@ -1,6 +1,8 @@
 package org.example.controller;
 
+import org.example.Container;
 import org.example.dto.Article;
+import org.example.dto.Member;
 import org.example.util.Util;
 
 import java.util.ArrayList;
@@ -14,7 +16,7 @@ public class ArticleController extends Controller {
     private String actionMethodName;
     public ArticleController(Scanner sc){
         this.sc = sc;
-        articles = new ArrayList<>();
+        articles = Container.articleDao.articles;
     }
 
     public void doAction(String cmd, String actionMethodName){
@@ -89,7 +91,17 @@ public class ArticleController extends Controller {
         System.out.println("번호 | 작성자 | 조희 | 제목");
         for (int i = 0; i<forListArticles.size(); i++) {
             Article article = forListArticles.get(i);
-            System.out.printf("%4d | %6d | %4d | %s\n", article.id, article.memberId, article.hit, article.title);
+            String writerName = null;
+
+            List<Member> members = Container.memberDao.members;
+
+            for(Member member : members){
+                if (article.memberId == member.id){
+                    writerName = member.name;
+                    break;
+                }
+            }
+            System.out.printf("%4d | %s | %4d | %s\n", article.id, writerName, article.hit, article.title);
         }
     }
 
