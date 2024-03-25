@@ -1,6 +1,7 @@
 package org.example.controller;
 
 import org.example.Container;
+import org.example.dto.Article;
 import org.example.dto.Member;
 import org.example.util.Util;
 
@@ -41,9 +42,9 @@ public class MemberController extends Controller {
 
     public void makeTestData() {
     System.out.println("테스트를 위한 회원 데이터를 생성합니다.");
-        members.add(new Member(1,Util.getNowDateStr(), "admin","admin","관리자"));
-        members.add(new Member(2,Util.getNowDateStr(), "user1","user1","홍길동"));
-        members.add(new Member(3,Util.getNowDateStr(), "user2","user2","홍길순"));
+        Container.memberDao.add(new Member(Container.memberDao.getNewId(),Util.getNowDateStr(), "admin","admin","관리자"));
+        Container.memberDao.add(new Member(Container.memberDao.getNewId(),Util.getNowDateStr(), "user1","user1","홍길동"));
+        Container.memberDao.add(new Member(Container.memberDao.getNewId(),Util.getNowDateStr(), "user2","user2","홍길순"));
     }
     public void doJoin() {
         int id = members.size() +1;
@@ -76,11 +77,12 @@ public class MemberController extends Controller {
             break;
         }
 
+
         System.out.printf("이름을 입력하세요 : ");
         String name = sc.nextLine();
 
         Member member = new Member(id, regDate,loginId, loginPw, name);
-        members.add(member);
+        Container.memberDao.add(member);
         System.out.printf("%s님 %d번 회원이 생성 되었습니다.\n",member.name, id);
     }
     public void doLogin(){
