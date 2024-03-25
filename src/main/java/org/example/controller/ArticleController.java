@@ -127,6 +127,11 @@ public class ArticleController extends Controller {
             System.out.printf("%s번 게시물은 존재하지 않습니다.\n", id);
             return;
         }
+
+        if (foundArticle.memberId != loginedMember.id){
+            System.out.printf("권한이 없습니다.\n");
+            return;
+        }
         System.out.printf("제목 : ");
         String title = sc.nextLine();
         System.out.printf("내용 : ");
@@ -141,13 +146,19 @@ public class ArticleController extends Controller {
         String cmdBits = cmd.split(" ")[2];
         int id = Integer.parseInt(cmdBits);
 
-        int foundIndex = getAritcleIndexById(id);
+       Article foundArticle = getAritcleById(id);
 
-        if (foundIndex == -1){
+        if (foundArticle == null){
             System.out.printf("%s번 게시물은 존재하지 않습니다.\n", id);
             return;
         }
-        articles.remove(foundIndex);
+
+        if (foundArticle.memberId != loginedMember.id){
+            System.out.printf("권한이 없습니다.\n");
+            return;
+        }
+
+        articles.remove(foundArticle);
         System.out.printf("%s번 게시물이 삭제되었습니다.\n", id);
     }
 
