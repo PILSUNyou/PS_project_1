@@ -23,10 +23,6 @@ public class ArticleController extends Controller {
 
         switch ( actionMethodName ){
             case "write":
-                if (isLogined() == false){
-                    System.out.println("로그인 후 이용해 주세요.");
-                    break;
-                }
                 doWrite();
                 break;
             case "list":
@@ -42,7 +38,7 @@ public class ArticleController extends Controller {
                 doDelete();
                 break;
             default :
-                System.out.printf("존재하지 않는 명령어 입니다.");
+                System.out.printf("존재하지 않는 명령어 입니다.\n");
                 break;
         }
 
