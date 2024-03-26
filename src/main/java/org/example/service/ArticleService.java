@@ -1,6 +1,6 @@
 package org.example.service;
 
-import org.example.Container;
+import org.example.container.Container;
 import org.example.dao.ArticleDao;
 import org.example.dto.Article;
 
@@ -11,10 +11,13 @@ public class ArticleService {
     private ArticleDao articleDao;
 
     public ArticleService(){
-        articleDao = Container.articleDao;
+        articleDao = org.example.container.Container.articleDao;
     }
     public List<Article> getForPrintArticles(String searchKeyword) {
         return articleDao.getForPrintArticles(searchKeyword);
+    }
+    public List<Article> getForPrintArticles() {
+        return this.getForPrintArticles(null);
     }
 
     public Article getAritcleById(int id) {
