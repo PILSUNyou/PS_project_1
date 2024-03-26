@@ -11,7 +11,7 @@ public class MemberService {
         memberDao = Container.memberDao;
     }
 
-    public void add(Member member) {
+    public void join(Member member) {
         memberDao.add(member);
     }
 

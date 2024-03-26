@@ -15,7 +15,7 @@ public class ArticleDao extends Dao{
 
     public void add(Article article) {
         articles.add(article);
-        lastId++;
+        lastId = article.id;
     }
 
     public List<Article> getArticles() {

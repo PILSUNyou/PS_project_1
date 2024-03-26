@@ -45,9 +45,9 @@ public class MemberController extends Controller {
 
     public void makeTestData() {
     System.out.println("테스트를 위한 회원 데이터를 생성합니다.");
-        Container.memberDao.add(new Member(Container.memberDao.getNewId(),Util.getNowDateStr(), "admin","admin","관리자"));
-        Container.memberDao.add(new Member(Container.memberDao.getNewId(),Util.getNowDateStr(), "user1","user1","홍길동"));
-        Container.memberDao.add(new Member(Container.memberDao.getNewId(),Util.getNowDateStr(), "user2","user2","홍길순"));
+        memberService.join(new Member(Container.memberDao.getNewId(),Util.getNowDateStr(), "admin","admin","관리자"));
+        memberService.join(new Member(Container.memberDao.getNewId(),Util.getNowDateStr(), "user1","user1","홍길동"));
+        memberService.join(new Member(Container.memberDao.getNewId(),Util.getNowDateStr(), "user2","user2","홍길순"));
     }
     public void doJoin() {
         int id = memberService.getNewId();
@@ -86,7 +86,7 @@ public class MemberController extends Controller {
         String name = sc.nextLine();
 
         Member member = new Member(id, regDate,loginId, loginPw, name);
-        memberService.add(member);
+        memberService.join(member);
 
         System.out.printf("%s님 %d번 회원이 생성 되었습니다.\n",member.name, id);
     }
