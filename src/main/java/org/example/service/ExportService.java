@@ -28,7 +28,7 @@ public class ExportService {
             html += "<div>작성자 : " + writerName + "</div>";
             html += "<div>제목 : " + article.title + "</div>";
             html += "<div>내용 : " + article.body+ "</div>";
-            if (article.id >1){
+            if (article.id > 1){
                 html += "<div><a gref= \"" +(article.id -1) + ".html\">이전글</a></div>";
             }
             html += "<div><a gref= \"" +(article.id +1) + ".html\">다음글</a></div>";

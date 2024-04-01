@@ -6,7 +6,6 @@ import org.example.controller.ExportController;
 import org.example.controller.MemberController;
 import org.example.service.ExportService;
 
-import java.security.spec.ECParameterSpec;
 import java.util.Scanner;
 
 public class App {

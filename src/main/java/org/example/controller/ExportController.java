@@ -6,7 +6,7 @@ import org.example.service.ExportService;
 import java.util.Scanner;
 
 public class ExportController extends Controller{
-    private  Scanner sc;
+    private Scanner sc;
     private ExportService exportService;
     public ExportController(Scanner sc){
         this.sc = sc;
