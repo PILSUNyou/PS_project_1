@@ -14,12 +14,14 @@ public class MemberController extends Controller {
     private Scanner sc;
     private String cmd;
     private String actionMethodName;
+    private Sesstion sesstion;
 
     private MemberService memberService;
 
     public MemberController(Scanner sc) {
         this.sc = sc;
         memberService = Container.memberService;
+        sesstion = Container.getSesstion();
     }
 
     public void doAction(String cmd, String actionMethodName) {
@@ -106,12 +108,15 @@ public class MemberController extends Controller {
             System.out.println("비밀번호가 일치하지 않습니다.");
             return;
         }
-        loginedMember = member;
+
+        sesstion.setLoginedMember(member);
+        Member loginedMember = sesstion.getLoginedMember();
+
         System.out.printf("로그인 성공! %s님 환영합니다.\n",loginedMember.name);
     }
 
     private void doLogout() {
-        loginedMember = null;
+        sesstion.setLoginedMember(null);
         System.out.printf("로그아웃 되었습니다.\n");
     }
     private boolean isJoinableLoginId(String loginId) {

@@ -18,10 +18,12 @@ public class ArticleController extends Controller {
     private String actionMethodName;
     private ArticleService articleService;
     private MemberService memberService;
+    private Sesstion sesstion;
     public ArticleController(Scanner sc){
         this.sc = sc;
         articleService = Container.articleService;
         memberService = Container.memberService;
+        sesstion = Container.getSesstion();
     }
 
     public void doAction(String cmd, String actionMethodName){
@@ -63,6 +65,8 @@ public class ArticleController extends Controller {
         String title = sc.nextLine();
         System.out.print("내용 : ");
         String body = sc.nextLine();
+
+        Member loginedMember = sesstion.getLoginedMember();
 
         Article article = new Article(id, regDate, loginedMember.id, title, body);
         articleService.write(article);
@@ -116,6 +120,8 @@ public class ArticleController extends Controller {
             return;
         }
 
+        Member loginedMember = sesstion.getLoginedMember();
+
         if (foundArticle.memberId != loginedMember.id){
             System.out.printf("권한이 없습니다.\n");
             return;
@@ -134,12 +140,14 @@ public class ArticleController extends Controller {
         String cmdBits = cmd.split(" ")[2];
         int id = Integer.parseInt(cmdBits);
 
-       Article foundArticle = articleService.getAritcleById(id);
+        Article foundArticle = articleService.getAritcleById(id);
 
         if (foundArticle == null){
             System.out.printf("%s번 게시물은 존재하지 않습니다.\n", id);
             return;
         }
+
+        Member loginedMember = sesstion.getLoginedMember();
 
         if (foundArticle.memberId != loginedMember.id){
             System.out.printf("권한이 없습니다.\n");

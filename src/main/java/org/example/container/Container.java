@@ -1,5 +1,6 @@
 package org.example.container;
 
+import org.example.controller.Sesstion;
 import org.example.dao.ArticleDao;
 import org.example.dao.MemberDao;
 import org.example.service.ArticleService;
@@ -12,6 +13,7 @@ public class Container {
     public static ArticleService articleService;
     public static MemberService memberService;
     public static ExportService exportService;
+    public static Sesstion sesstion;
 
     static {
         articleDao = new ArticleDao();
@@ -19,5 +21,13 @@ public class Container {
         articleService = new ArticleService();
         memberService = new MemberService();
         exportService = new ExportService();
+    }
+
+    public static Sesstion getSesstion() {
+        if (sesstion == null) {
+            sesstion = new Sesstion();
+        }
+
+        return sesstion;
     }
 }
